@@ -1,0 +1,56 @@
+@page "/contacts"
+@using MudBlazor
+
+<MudItem xs="12" class="d-flex justify-center">
+            <HeaderTemplate />
+</MudItem>
+<MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+    <MudText Class="pb-4" Typo="Typo.h4">Contact Us</MudText>
+    <MudText Class="pb-2">
+        We are here to help! If you have any questions, concerns, or suggestions, please feel free to reach out to us. You can contact the North San Antonio Hills HOA directly via the contacts below OR submit an anonymous request using the form below:
+    </MudText>
+    <MudLink
+        Class="pb-4"
+        Href="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAABxo201URFowOVc0NzZTVUVGSThDTTRPSzhJRVhXTC4u"
+        Target="_blank">
+        <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary">Provide Feedback
+        </MudButton>
+    </MudLink>
+    <MudTable Class="pt-4" T="Contact" Items="contacts">
+        <HeaderContent>
+            <MudTh>Position</MudTh>
+            <MudTh>Name</MudTh>
+            <MudTh>Email</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Position">@context.Position</MudTd>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Email">
+                <MudLink Href="@context.MailtoLink">@context.Email</MudLink>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+
+</MudContainer>
+
+@code {
+    private List<Contact> contacts = new List<Contact>
+    {
+        new Contact { Position = "President", Name = "Jessica Grigsby", Email = "president@nsah-hoa.org" },
+        new Contact { Position = "Vice President", Name = "Davin Dukes", Email = "vicepresident@nsah-hoa.org" },
+        new Contact { Position = "Secretary", Name = "Cole Hudson", Email = "secretary@nsah-hoa.org" },
+        new Contact { Position = "Assistant Secretary", Name = "Osvaldo 'Jim' Jimenez", Email = "assistantsecretary@nsah-hoa.org" },
+        new Contact { Position = "Treasurer", Name = "Mike Dammann", Email = "treasurer@nsah-hoa.org" },
+        new Contact { Position = "Architectural Chair", Name = "Miguel Sanchez", Email = "architect@nsah-hoa.org" }
+    };
+
+    private class Contact
+    {
+        public string Position { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string MailtoLink => $"mailto:{Email}";
+    }
+}
+
+

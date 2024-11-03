@@ -1,0 +1,49 @@
+@page "/committees"
+@using MudBlazor
+
+<MudItem xs="12" class="d-flex justify-center">
+            <HeaderTemplate />
+</MudItem>
+<MudContainer>
+    <MudText Typo="Typo.h4">North San Antonio Hills HOA Committees</MudText>
+    <MudText>
+        In order to better serve the community and address the needs of our residents as a team,
+        the North San Antonio Hills HOA has established several committees led by board members or members at large.
+        If you are interested in joining a committee, please contact the committee chairperson directly.
+        If you have an idea for a new committee, please contact the HOA board 
+        <MudLink Href="mailto:president@nsah-hoa.org;vicepresident@nsah-hoa.org;secretary@nsah-hoa.org;assistantsecretary@nsah-hoa.org">Here</MudLink>.
+    </MudText>
+
+
+    <MudGrid>
+        @foreach (var committee in committees)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Class="pa-4" Style="height: 100%;">
+                    <MudText Typo="Typo.h6" Id="@committee.Key.Replace(" ", "-").ToLower().Replace("--", "-")">@committee.Key</MudText>
+                    <MudList T="string">
+                        @foreach (var member in committee.Value)
+                        {
+                            <MudListItem>@member</MudListItem>
+                        }
+                    </MudList>
+                </MudPaper>
+            </MudItem>
+        }
+    </MudGrid>
+</MudContainer>
+
+@code {
+    private Dictionary<string, List<string>> committees = new Dictionary<string, List<string>>
+    {
+        { "City Community Relations", new List<string> { "Jessica Grigsby", "Davin Dukes", "Cole Hudson", "Osvaldo 'Jim' Jimenez" } },
+        { "Neighborhood Community Relations", new List<string> { "Davin Dukes", "Osvaldo 'Jim' Jimenez", "Kevin Mantovani", "Alan Tuma" } },
+        { "Budget and Finance", new List<string> { "Jessica Grigsby", "Mike Dammann", "Cole Hudson" } },
+        { "Website and Social Media", new List<string> { "Osvaldo Jimenez", "Greg Jones" } },
+        { "Development and Real Estate", new List<string> { "Jessica Grigsby", "Cole Hudson", "Richard Ramos", "Linda Pilar" } },
+        { "Social Events Coordinator", new List<string> { "Looking for volunteers!" } },
+        { "Park Maintenance and Clean Up", new List<string> { "Looking for volunteers!" } },
+        { "Sign Maintenance", new List<string> { "Looking for volunteers!" } },
+        { "Architectural", new List<string> { "Miguel Sanchez", "Thomas", "Jessica Grigsby" } }
+    };
+}

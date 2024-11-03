@@ -1,0 +1,60 @@
+@page "/payments"
+@using MudBlazor
+
+<MudItem xs="12" class="d-flex justify-center">
+            <HeaderTemplate />
+</MudItem>
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+    <MudPaper Elevation="1" Class="pa-4">
+
+        <MudText Typo="Typo.h4" Align="Align.Center">North San Antonio Hills HOA Dues</MudText>
+        <MudDivider Class="my-2" />
+
+        <MudText Typo="Typo.h6">Pay Your HOA Dues</MudText>
+        <MudText>Your $50.00 a year helps to ensure your property values are protected.</MudText>
+
+        <MudDivider Class="my-2" />
+        <MudText Typo="Typo.subtitle1">What Your Dues Cover:</MudText>
+        <MudList T="string">
+            <MudListItem Dense="true">Breakfast in the Park</MudListItem>
+            <MudListItem Dense="true">Halloween Party</MudListItem>
+            <MudListItem Dense="true">Newsletter</MudListItem>
+            <MudListItem Dense="true">Roadrunner Park Maintenance</MudListItem>
+            <MudListItem Dense="true">Entrance Sign Maintenance</MudListItem>
+            <MudListItem Dense="true">
+            Communication with City, County, and State for:
+            <MudList>
+                <MudListItem Dense="true">Land Use and Zoning</MudListItem>
+                <MudListItem Dense="true">Streets and Utilities</MudListItem>
+                <MudListItem Dense="true">Nearby Area Developments</MudListItem>
+                <MudListItem Dense="true">Subdivision Access</MudListItem>
+                <MudListItem Dense="true">Emergency Services</MudListItem>
+            </MudList>
+            </MudListItem>
+        </MudList>
+
+        <MudDivider Class="my-2" />
+        <MudText Align="Align.Center">If you have not paid your HOA dues, you can do so by the following means:</MudText>
+
+        <MudButton FullWidth=true Variant="Variant.Filled" Color="Color.Primary" Href="https://www.paypal.com/donate/?hosted_button_id=LERPRZ6EAMKG6&source=qr" Target="_blank">
+            Credit Card Payments via PayPal
+        </MudButton>
+        <MudText Align="Align.Center" Class="mt-2">(PayPal account is not required)</MudText>
+
+        <MudText Align="Align.Center">Cash payments can be made to the treasurer at the next HOA meeting.</MudText>
+        <MudText Align="Align.Center">Check payments can be mailed to the following address:</MudText>
+
+        <MudPaper Elevation="2" Class="pa-4 my-2">
+            <MudText Typo="Typo.h6" Align="Align.Center">PLEASE MAIL YOUR CHECKS TO:</MudText>
+            <MudText Align="Align.Center">NSAH-HOA</MudText>
+            <MudText Align="Align.Center">4015 Summer Breeze</MudText>
+            <MudText Align="Align.Center">San Antonio, Texas 78253</MudText>
+        </MudPaper>
+
+        <MudText Align="Align.Center">PLEASE ALWAYS ENSURE YOU KEEP YOUR RECEIPT FOR YOUR RECORDS.</MudText>
+        <MudText Align="Align.Center">
+            We are currently working on setting up a system that will allow you to check your HOA payment effective date to avoid any double payments.
+        </MudText>
+
+    </MudPaper>
+</MudContainer>

@@ -1,0 +1,28 @@
+﻿@page "/"
+@using MudBlazor
+@using MudBlazor.Components
+@using MudBlazor.Services
+
+
+<PageTitle>North San Antonio Hills HOA</PageTitle>
+<MudItem xs="12" class="d-flex justify-center">
+            <HeaderTemplate />
+</MudItem>
+<MudContainer MaxWidth="MaxWidth.False" Style="padding: 2rem;">
+    <MudGrid>
+        <MudItem xs="12">
+            <MudText Typo="Typo.h5" Align="Align.Left">Welcome to North San Antonio Hills</MudText>
+            <MudText Typo="Typo.body1" Align="Align.Left">
+                The North San Antonio Hills Homeowners Association (NSAH HOA) is dedicated to maintaining and improving
+                the quality of life in our community. Our website provides important information about our neighborhood,
+                including upcoming events, news, and resources for residents.
+            </MudText>
+        </MudItem>
+        <MudItem xs="12">
+            <InfoCollection />
+        </MudItem>
+        <MudItem xs="12">
+            <Newsfeed />
+        </MudItem>
+    </MudGrid>
+</MudContainer>

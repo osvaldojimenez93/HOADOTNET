@@ -1,0 +1,38 @@
+@page "/helpful-links"
+
+<MudItem xs="12" class="d-flex justify-center">
+            <HeaderTemplate />
+</MudItem>
+
+<PageTitle>Helpful Links</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+    <MudText Typo="Typo.h5">Helpful Links:</MudText>
+    <MudList T="string">
+        @foreach (var link in helpfulLinks)
+        {
+            <MudListItem>
+                <MudLink Href="@link.Url" Target="_blank">@link.Text</MudLink>
+            </MudListItem>
+        }
+    </MudList>
+</MudContainer>
+
+@code {
+    private List<LinkItem> helpfulLinks = new List<LinkItem>
+    {
+    new LinkItem { Text = "District 6 City Council", Url ="https://www.sa.gov/Directory/Departments/Mayor-Council/City-Council/D6" },
+    new LinkItem { Text = "SAWS Website", Url = "https://www.saws.org/" },
+    new LinkItem { Text = "CPS Energy Website", Url = "https://cpsenergy.com/" },
+    new LinkItem { Text = "Garbage Collection Map", Url = "https://gis.sanantonio.gov/swmd/mycollectionday/default.html" },
+    new LinkItem { Text = "Bexar County Property Maps", Url = "https://bexar.trueautomation.com/mapSearch/?cid=110" },
+    new LinkItem { Text = "City of San Antonio Website", Url = "https://www.sanantonio.gov/" }
+    // Add more links as needed
+    };
+
+    public class LinkItem
+    {
+        public string Text { get; set; }
+        public string Url { get; set; }
+    }
+}

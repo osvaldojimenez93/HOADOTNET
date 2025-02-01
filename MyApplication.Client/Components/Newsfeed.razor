@@ -2,6 +2,8 @@
 
 <MudText Typo="Typo.h5" GutterBottom="true">Latest News from the Community</MudText>
 <MudPaper Class="p-4">
+    <MudTextField @bind-Value="newPostContent" Label="What's on your mind?" Variant="Variant.Filled" Lines="5" />
+    <MudButton OnClick="SubmitPost" Variant="Variant.Filled" Color="Color.Primary">Post</MudButton>
     @foreach (var post in Posts)
     {
         <MudCard Class="mb-4">
@@ -14,24 +16,43 @@
                 <MudMarkdown Value=@post.Content />
             </MudCardContent>
             <MudCardActions>
-                <MudButton StartIcon="@Icons.Material.Filled.ThumbUp">Like (@post.Likes)</MudButton>
-                <MudButton StartIcon="@Icons.Material.Filled.Comment">Comment (@post.Comments)</MudButton>
+                <MudButton StartIcon="@Icons.Material.Filled.ThumbUp" OnClick="() => ToggleLike(post)">Like (@post.Likes)</MudButton>
+                <MudButton StartIcon="@Icons.Material.Filled.Comment" OnClick="() => ToggleComment(post)">Comment (@post.Comments?.Count ?? 0)</MudButton>
             </MudCardActions>
+            @if (post.ShowComments)
+            {
+                <MudTextField @bind-Value="newCommentContent" Label="Write a comment..." Variant="Variant.Filled" Lines="3" />
+                <MudButton OnClick="() => SubmitComment(post)" Variant="Variant.Filled" Color="Color.Primary">Comment</MudButton>
+                @foreach (var comment in post.Comments)
+                {
+                    <MudCard Class="ml-4 mt-2">
+                        <MudCardHeader>
+                            <MudAvatar Src="@comment.UserAvatar" Alt="@comment.UserName" />
+                            <MudText Class="ml-2" Typo="Typo.subtitle1">@comment.UserName</MudText>
+                            <MudText Class="ml-auto" Typo="Typo.body2">@comment.Timestamp.ToString("g")</MudText>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudMarkdown Value=@comment.Content />
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton StartIcon="@Icons.Material.Filled.ThumbUp" OnClick="() => ToggleLike(comment)">Like (@comment.Likes)</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                }
+            }
         </MudCard>
     }
 </MudPaper>
 
-
-
 @code {
     private List<Post> Posts = new List<Post>
-{
-new Post
-{
-UserAvatar = "https://via.placeholder.com/40",
-UserName = "Administrator",
-Timestamp = DateTime.Now.AddMinutes(-15),
-Content = @"### North San Antonio Hills Homeowners Association
+    {
+        new Post
+        {
+            UserAvatar = "https://via.placeholder.com/40",
+            UserName = "Administrator",
+            Timestamp = DateTime.Now.AddMinutes(-15),
+            Content = @"### North San Antonio Hills Homeowners Association
 
 #### July 2024 Quarterly Update
 
@@ -159,18 +180,104 @@ neighborhood a better place to live. We need your ideas, feedback, and participa
 Join us and let your voice be heard!
 
 ",
-Likes = 10,
-Comments = null
-},
-new Post
-{
-UserAvatar = "https://via.placeholder.com/40",
-UserName = "Jane Smith",
-Timestamp = DateTime.Now.AddHours(-1),
-Content = "Another example of a newsfeed item.",
-Likes = 5,
-Comments = null
-}
-};
+            Likes = 10,
+            Comments = new List<Comment>
+            {
+                new Comment
+                {
+                    UserAvatar = "https://via.placeholder.com/40",
+                    UserName = "John Doe",
+                    Timestamp = DateTime.Now.AddMinutes(-10),
+                    Content = "Great update! Thanks for sharing.",
+                    Likes = 2
+                }
+            }
+        },
+        new Post
+        {
+            UserAvatar = "https://via.placeholder.com/40",
+            UserName = "Jane Smith",
+            Timestamp = DateTime.Now.AddHours(-1),
+            Content = "Another example of a newsfeed item.",
+            Likes = 5,
+            Comments = new List<Comment>
+            {
+                new Comment
+                {
+                    UserAvatar = "https://via.placeholder.com/40",
+                    UserName = "Alice Johnson",
+                    Timestamp = DateTime.Now.AddMinutes(-30),
+                    Content = "Interesting post!",
+                    Likes = 1
+                }
+            }
+        }
+    };
 
+    private string newPostContent;
+    private string newCommentContent;
+
+    private void SubmitPost()
+    {
+        if (!string.IsNullOrWhiteSpace(newPostContent))
+        {
+            Posts.Insert(0, new Post
+            {
+                UserAvatar = "https://via.placeholder.com/40",
+                UserName = "Current User",
+                Timestamp = DateTime.Now,
+                Content = newPostContent,
+                Likes = 0,
+                Comments = new List<Comment>()
+            });
+            newPostContent = string.Empty;
+        }
+    }
+
+    private void SubmitComment(Post post)
+    {
+        if (!string.IsNullOrWhiteSpace(newCommentContent))
+        {
+            post.Comments.Add(new Comment
+            {
+                UserAvatar = "https://via.placeholder.com/40",
+                UserName = "Current User",
+                Timestamp = DateTime.Now,
+                Content = newCommentContent,
+                Likes = 0
+            });
+            newCommentContent = string.Empty;
+        }
+    }
+
+    private void ToggleLike(Post post)
+    {
+        if (post.HasLiked)
+        {
+            post.Likes--;
+        }
+        else
+        {
+            post.Likes++;
+        }
+        post.HasLiked = !post.HasLiked;
+    }
+
+    private void ToggleLike(Comment comment)
+    {
+        if (comment.HasLiked)
+        {
+            comment.Likes--;
+        }
+        else
+        {
+            comment.Likes++;
+        }
+        comment.HasLiked = !comment.HasLiked;
+    }
+
+    private void ToggleComment(Post post)
+    {
+        post.ShowComments = !post.ShowComments;
+    }
 }

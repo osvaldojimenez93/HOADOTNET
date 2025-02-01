@@ -8,4 +8,5 @@ public class Post
     public string Content { get; set; }
     public int Likes { get; set; }
     public IList<Comment> ?Comments { get; set; }
+    public bool HasLiked { get; set; }
 }

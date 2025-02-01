@@ -7,4 +7,5 @@ public class Comment
     public DateTime Timestamp { get; set; }
     public string Content { get; set; }
     public int Likes { get; set; }
+    public bool HasLiked { get; set; }
 }

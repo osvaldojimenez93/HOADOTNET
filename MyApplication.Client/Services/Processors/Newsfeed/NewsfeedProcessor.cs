@@ -1,39 +1,20 @@
-@using MyApplication.Client.Models
-@using MyApplication.Client.Services.Processors.Newsfeed
+using MyApplication.Client.Models;
 
-<MudText Typo="Typo.h5" GutterBottom="true">Latest News from the Community</MudText>
-<MudPaper Class="p-4">
-    @foreach (var post in Posts)
+namespace MyApplication.Client.Services.Processors.Newsfeed;
+
+public class NewsfeedProcessor
+{
+    public NewsfeedProcessor()
     {
-        <MudCard Class="mb-4">
-            <MudCardHeader>
-                <MudAvatar Src="@post.UserAvatar" Alt="@post.UserName" />
-                <MudText Class="ml-2" Typo="Typo.subtitle1">@post.UserName</MudText>
-                <MudText Class="ml-auto" Typo="Typo.body2">@post.Timestamp.ToString("g")</MudText>
-            </MudCardHeader>
-            <MudCardContent>
-                <MudMarkdown Value=@post.Content />
-            </MudCardContent>
-            <MudCardActions>
-                <MudButton StartIcon="@Icons.Material.Filled.ThumbUp">Like (@post.Likes)</MudButton>
-                <MudButton StartIcon="@Icons.Material.Filled.Comment">Comment (@post.Comments)</MudButton>
-            </MudCardActions>
-        </MudCard>
+        // Initialize any required resources here
     }
-</MudPaper>
+        
 
-
-
-@code {
-    private NewsfeedProcessor _newsfeedProcessor = new NewsfeedProcessor();
-    private List<Post>? Posts;
-    protected override async Task OnInitializedAsync()
+    public async Task<List<Post>> GetPostsAsync()
     {
-        Posts = await _newsfeedProcessor.GetPostsAsync();
-    }
-    private List<Post> Posta = new List<Post>
-    {
-        new Post
+        var posts = new List<Post>
+        {
+            new Post
         {
         UserAvatar = "https://via.placeholder.com/40",
         UserName = "Administrator",
@@ -81,14 +62,8 @@
         ### Community Projects and News
 
         #### Upcoming Events
-    using MyApplication.Client.Services.Processors.Newsfeed;
 
-#line default
-#line hidden
-#nullable disable
-    #line hidden
-        #nullable disable
-        turday, September 7 | 6:30pm | NSAH ladies dinner out at Via 313 Pizza, 7010 W Loop 1604 N, Suite 101 |
+        Saturday, September 7 | 6:30pm | NSAH ladies dinner out at Via 313 Pizza, 7010 W Loop 1604 N, Suite 101 |
 
         Keep an eye on www.nsah-HOA.org for more events and neighborhood news!
 
@@ -180,5 +155,28 @@
         Likes = 5,
         Comments = null
         }
-    };
+        };
+
+        return posts;
+    }
+
+    public async Task<Post> GetPostAsync(int id)
+    {
+        return null!;
+    }
+
+    public async Task<Post> CreatePostAsync(Post post)
+    {
+        return null!;
+    }
+
+    public async Task<Post> UpdatePostAsync(int id, Post post)
+    {
+        return null!;
+    }
+
+    public async Task DeletePostAsync(int id)
+    {
+        await Task.CompletedTask;
+    }
 }

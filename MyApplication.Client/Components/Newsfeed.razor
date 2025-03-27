@@ -3,6 +3,8 @@
 
 <MudText Typo="Typo.h5" GutterBottom="true">Latest News from the Community</MudText>
 <MudPaper Class="p-4">
+    <MudTextField @bind-Value="newPostContent" Label="What's on your mind?" Variant="Variant.Filled" Lines="5" />
+    <MudButton OnClick="SubmitPost" Variant="Variant.Filled" Color="Color.Primary">Post</MudButton>
     @foreach (var post in Posts)
     {
         <MudCard Class="mb-4">
@@ -15,14 +17,33 @@
                 <MudMarkdown Value=@post.Content />
             </MudCardContent>
             <MudCardActions>
-                <MudButton StartIcon="@Icons.Material.Filled.ThumbUp">Like (@post.Likes)</MudButton>
-                <MudButton StartIcon="@Icons.Material.Filled.Comment">Comment (@post.Comments)</MudButton>
+                <MudButton StartIcon="@Icons.Material.Filled.ThumbUp" OnClick="() => ToggleLike(post)">Like (@post.Likes)</MudButton>
+                <MudButton StartIcon="@Icons.Material.Filled.Comment" OnClick="() => ToggleComment(post)">Comment (@post.Comments?.Count ?? 0)</MudButton>
             </MudCardActions>
+            @if (post.ShowComments)
+            {
+                <MudTextField @bind-Value="newCommentContent" Label="Write a comment..." Variant="Variant.Filled" Lines="3" />
+                <MudButton OnClick="() => SubmitComment(post)" Variant="Variant.Filled" Color="Color.Primary">Comment</MudButton>
+                @foreach (var comment in post.Comments)
+                {
+                    <MudCard Class="ml-4 mt-2">
+                        <MudCardHeader>
+                            <MudAvatar Src="@comment.UserAvatar" Alt="@comment.UserName" />
+                            <MudText Class="ml-2" Typo="Typo.subtitle1">@comment.UserName</MudText>
+                            <MudText Class="ml-auto" Typo="Typo.body2">@comment.Timestamp.ToString("g")</MudText>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudMarkdown Value=@comment.Content />
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton StartIcon="@Icons.Material.Filled.ThumbUp" OnClick="() => ToggleLike(comment)">Like (@comment.Likes)</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                }
+            }
         </MudCard>
     }
 </MudPaper>
-
-
 
 @code {
     private NewsfeedProcessor _newsfeedProcessor = new NewsfeedProcessor();
